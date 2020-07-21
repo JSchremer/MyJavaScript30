@@ -57,17 +57,57 @@
     }
 
     .hand {
+      position: absolute;
+      top: 50%;
+      transform-origin: 100%;
+      transform: rotate3d(90deg);
+      transition: all 0.5sec;
+      transition-timing-function: cubic-bezier(.04,.04,.17,1.95);
+    }
+
+    .second-hand {
+      width: 50%;
+      height: 3px;
+      background: red;
+    }
+
+    .min-hand {
       width: 50%;
       height: 6px;
       background: black;
-      position: absolute;
-      top: 50%;
+    }
+
+    .hour-hand {
+      width: 40%;
+      height: 10px;
+      background: black;
     }
 
   </style>
-
+  
   <script>
+    const secondHand = document.querySelector(".second-hand");
+    const minuteHand = document.querySelector(".min-hand");
+    const hourHand = document.querySelector(".hour-hand");
 
+    function setTime() {
+      const time = new Date();
+
+      const seconds = time.getSeconds();
+      const secondsDegrees = ((seconds/60) * 360) + 90;
+      secondHand.style.transform = `rotate(${secondsDegrees}deg)`;
+
+
+      const minutes = time.getMinutes();
+      const minutesDegrees = ((minutes/60) * 360) + 90 ;
+      minuteHand.style.transform = `rotate(${minutesDegrees}deg)`;
+
+      const hours = time.getHours();
+      const hoursDegrees = ((hours/60) * 360) + 90 + (minutes/60) * 30;
+      hourHand.style.transform = `rotate(${hoursDegrees}deg)`;
+    }
+
+    setInterval(setTime, 1000);
 
   </script>
 </body>
